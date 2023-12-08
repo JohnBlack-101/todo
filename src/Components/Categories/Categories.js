@@ -17,7 +17,7 @@ export default function Categories() {
     const [showCreate, setShowCreate] = useState(false)
 
     const getCategories = () => { 
-        axios.get(`https://localhost:7049/api/Categories`).then(response => {
+        axios.get(`https://localhost:7105/api/Categories`).then(response => {
            console.log(response)
            setCategories(response.data)
         })

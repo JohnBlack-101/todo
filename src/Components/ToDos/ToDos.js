@@ -34,7 +34,7 @@ export default function ToDos() {
 
     //Axios function to fetch the ToDo list from the To Do API
     const getToDos = () => {
-        axios.get(`https://localhost:7105/api/Tasks`).then(response => {
+        axios.get(`https://localhost:7105/api/ToDoes`).then(response => {
             console.log(response)
             setToDos(response.data)
         })
@@ -44,7 +44,7 @@ export default function ToDos() {
         function updateToDoInDB(toDoId, updatedTask){
             //toDoId will be passed in by the specific single todo that is selected
             //Posting the new status by passing in the value of the newDoneStatus
-            return axios.put(`https://localhost:7105/api/Tasks/${toDoId}`, updatedTask).then(() => {
+            return axios.put(`https://localhost:7105/api/ToDoes/${toDoId}`, updatedTask).then(() => {
                 getToDos()
             })
             .catch(error=> {
@@ -57,7 +57,7 @@ export default function ToDos() {
         const deleteToDo = (id, todoName) => {           
             if(window.confirm(`Are you sure you want to delete ${todoName}?`)){
                 //We only enter these scopes if our user clicks "OK"
-                axios.delete(`https://localhost:7105/api/Tasks/${id}`).then(() => {
+                axios.delete(`https://localhost:7105/api/ToDoes/${id}`).then(() => {
                   getToDos()//this refreshes the resources tiled view
                 })
               }
@@ -66,7 +66,7 @@ export default function ToDos() {
 
          //Update the database when a new todo Is posted
          function updateNewToDo(newToDo){           
-            return axios.post(`https://localhost:7105/api/Tasks`, newToDo).then(() => {
+            return axios.post(`https://localhost:7105/api/ToDoes`, newToDo).then(() => {
                 getToDos()
             })
             .catch(error=> {
