@@ -1,10 +1,41 @@
-//React Hooks allow us to manage any changes in a component. When we need to manage those changes, we need React hooks. To implement, we add useState to the React import below
-import React, { useState } from 'react'
+import React from 'react'
+
 import './App.css'
 
-export default function App() {
-  //Below we will create a React Hook, which is a variable that is created as the component is mounted to the Virtual DOM. We set the state of showContent to equal 'Home' as its initial state. setShowContent() is a function that we can use to manage the state of showContent. We should never try to directly change the value of showContent, but instead we use setShowContent to manage the 'state' of the variable whenever we need to change its value.
-  const [showContent, setShowContent] = useState('Home')
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Navigation from './Components/Navigation'
+import Footer from './Components/Footer'
+import NotFound from './Components/NotFound/NotFound'
+import AuthProvider from './contexts/AuthContext'
+import Login from './Components/Auth/Login'
+import ProtectedRoute from './Components/ProtectedRoute'
+import Categories from './Components/Categories/Categories'
+import ToDos from './Components/ToDos/ToDos'
 
-  return 
+
+
+export default function App() {
+  return (
+    <div className="App">
+      {/* The below component is actually calling the BrowserRouter but we made an alias in the import. We surround the Navigation because it has Link components called from react-router-dom package and rendered in that component. Per the docs on their site: Link, Routes, and each Route need to be rendered inside the Router. */}
+      <AuthProvider>
+          <Router>
+            {/* Routes is like a switch that defines each individual Route */}
+            <Navigation />
+            <Routes>      
+                       
+                        {/*Routes to the homepage  */}
+              {/* <Route path='/' element={<Login />} /> */}
+
+              <Route path='/' element={<Login/>} />
+              <Route path='/todo' element= {<ToDos/>} />
+              <Route path='/categories' element={<ProtectedRoute> <Categories /> </ProtectedRoute>} />                          
+              <Route path='/login' element={<Login />} />
+              <Route path='*' element={< NotFound />} />          
+            </Routes>
+            <Footer />
+          </Router>
+        </AuthProvider>
+    </div>
+  )
 }
